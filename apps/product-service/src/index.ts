@@ -10,8 +10,12 @@ app.use(
   }),
 );
 
-app.get("/", (req: Request, res: Response) => {
-  res.json({ message: "Hello from Product Service!" });
+app.get("/health", (req: Request, res: Response) => {
+  res.status(200).json({
+    status: "ok",
+    uptime: process.uptime(),
+    timestamp: Date.now(),
+  });
 });
 
 app.listen(8000, () => {
