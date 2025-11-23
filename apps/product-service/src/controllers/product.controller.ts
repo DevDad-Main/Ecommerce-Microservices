@@ -7,6 +7,24 @@ export const createProduct = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const data: Prisma.ProductCreateInput = req.body;
 
+    const { colors, images } = data;
+
+    if (!colors || !Array.isArray(colors) || colors.length === 0) {
+      return next(new AppError("No Colors Provided", 400));
+    }
+
+    if (!images || typeof images !== "object") {
+      return next(new AppError("No Images Provided", 400));
+    }
+
+    const missingColours = colors.filter((color) => !(color in images));
+
+    if (missingColours.length > 0) {
+      return next(
+        new AppError(`Missing Images For Colours: ${missingColours}`, 400),
+      );
+    }
+
     const product = await prisma.product.create({
       data,
     });
