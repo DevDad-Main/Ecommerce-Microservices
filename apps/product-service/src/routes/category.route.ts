@@ -1,14 +1,15 @@
 import { Router } from "express";
 import {
+  getCategories,
+  createCategory,
   deleteCategory,
   getCategory,
   updateCategory,
 } from "../controllers/category.controller";
-import { createProduct, getProducts } from "../controllers/product.controller";
 
 const router: Router = Router();
 
-router.route("/").get(getProducts).post(createProduct);
+router.route("/").get(getCategories).post(createCategory);
 router
   .route("/:id")
   .get(getCategory)
