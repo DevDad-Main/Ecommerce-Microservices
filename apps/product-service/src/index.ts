@@ -1,5 +1,6 @@
-import express, { Request, Response } from "express";
+import express, { Request, response, Response } from "express";
 import cors from "cors";
+import { clerkMiddleware, getAuth } from "@clerk/express";
 
 const app = express();
 
@@ -9,12 +10,28 @@ app.use(
     credentials: true,
   }),
 );
+app.use(clerkMiddleware());
 
 app.get("/health", (req: Request, res: Response) => {
   res.status(200).json({
     status: "ok",
     uptime: process.uptime(),
     timestamp: Date.now(),
+  });
+});
+
+app.get("/test", (req: Request, res: Response) => {
+  const auth = getAuth(req);
+
+  const userId = auth.userId;
+
+  if (!userId) {
+    return res.status(401).json({ message: "You are not logged in" });
+  }
+
+  res.json({
+    message: "Product Service is Authenticated",
+    auth,
   });
 });
 
