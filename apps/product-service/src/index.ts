@@ -21,17 +21,9 @@ app.get("/health", (req: Request, res: Response) => {
 });
 
 app.get("/test", (req: Request, res: Response) => {
-  const auth = getAuth(req);
-
-  const userId = auth.userId;
-
-  if (!userId) {
-    return res.status(401).json({ message: "You are not logged in" });
-  }
-
   res.json({
     message: "Product Service is Authenticated",
-    auth,
+    userId: req.userId,
   });
 });
 
