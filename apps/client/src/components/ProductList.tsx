@@ -95,19 +95,19 @@ import Filter from "./Filter";
 //   },
 //   {
 //     id: 6,
-  //   name: "Nike Air Max 270",
-  //   shortDescription:
-  //     "Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit.",
-  //   description:
-  //     "Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit. Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit. Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit.",
-  //   price: 59.9,
-  //   sizes: ["40", "42", "43", "44"],
-  //   colors: ["gray", "white"],
-  //   images: { gray: "/products/6g.png", white: "/products/6w.png" },
-  //   categorySlug: "test",
-  //   createdAt: new Date(),
-  //   updatedAt: new Date(),
-  // },
+//   name: "Nike Air Max 270",
+//   shortDescription:
+//     "Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit.",
+//   description:
+//     "Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit. Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit. Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit.",
+//   price: 59.9,
+//   sizes: ["40", "42", "43", "44"],
+//   colors: ["gray", "white"],
+//   images: { gray: "/products/6g.png", white: "/products/6w.png" },
+//   categorySlug: "test",
+//   createdAt: new Date(),
+//   updatedAt: new Date(),
+// },
 //   {
 //     id: 7,
 //     name: "Nike Ultraboost Pulse ",
@@ -152,10 +152,10 @@ const fetchData = async ({
   params: "homepage" | "products";
 }) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL}/products?${category ? `category=${category}` : ""}${search ? `&search=${search}` : ""}&sort=${sort || "newest"}${params === "homepage" ? "&limit=8" : ""}`
+    `${process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL}/products?${category ? `category=${category}` : ""}${search ? `&search=${search}` : ""}&sort=${sort || "newest"}${params === "homepage" ? "&limit=8" : ""}`,
   );
-  const data: ProductType[] = await res.json();
-  return data;
+  const data = await res.json();
+  return data.products;
 };
 const ProductList = async ({
   category,
