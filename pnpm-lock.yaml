@@ -267,6 +267,9 @@ importers:
       '@clerk/express':
         specifier: ^1.7.52
         version: 1.7.52(express@5.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@repo/product-db':
+        specifier: workspace:*
+        version: link:../../packages/product-db
       '@types/cors':
         specifier: ^2.8.19
         version: 2.8.19
