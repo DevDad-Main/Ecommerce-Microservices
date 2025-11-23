@@ -1,6 +1,8 @@
 import express, { Request, response, Response } from "express";
 import cors from "cors";
 import { clerkMiddleware, getAuth } from "@clerk/express";
+import productRouter from "./routes/product.route.ts";
+import categoryRouter from "./routes/category.route";
 
 const app = express();
 
@@ -26,6 +28,9 @@ app.get("/test", (req: Request, res: Response) => {
     userId: req.userId,
   });
 });
+
+app.use("/products", productRouter);
+app.use("/categories", categoryRouter);
 
 app.listen(8000, () => {
   console.log("Product Service is running on port 8000");
