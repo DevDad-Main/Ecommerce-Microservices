@@ -90,4 +90,24 @@ export const getProducts = catchAsync(
 );
 //#endregion
 
-export const getProduct = async (req: Request, res: Response) => {};
+//#region GET: Get Product By ID
+export const getProduct = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+
+    if (!id) {
+      return next(new AppError("Product ID is required", 400));
+    }
+
+    const product = await prisma.product.findUnique({
+      where: { id: Number(id) },
+    });
+
+    if (!product) {
+      return next(new AppError("Product Not Found", 404));
+    }
+
+    return res.status(200).json({ success: true, product });
+  },
+);
+//#endregion

@@ -155,6 +155,11 @@ const fetchData = async ({
     `${process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL}/products?${category ? `category=${category}` : ""}${search ? `&search=${search}` : ""}&sort=${sort || "newest"}${params === "homepage" ? "&limit=8" : ""}`,
   );
   const data = await res.json();
+
+  if (!data.success) {
+    return [];
+  }
+
   return data.products;
 };
 const ProductList = async ({
@@ -174,7 +179,7 @@ const ProductList = async ({
       <Categories />
       {params === "products" && <Filter />}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-12">
-        {products.map((product) => (
+        {products.map((product: ProductType) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
