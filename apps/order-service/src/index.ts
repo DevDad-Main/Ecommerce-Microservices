@@ -1,10 +1,12 @@
 import Fastify from "fastify";
 import { clerkPlugin, getAuth } from "@clerk/fastify";
 import { isUserAuthenticated } from "./middleware/auth.middleware";
+import { connectOrderDB } from "@repo/order-db";
+import { orderRoute } from "./routes/order.route";
 
 const fastify = Fastify();
 
-fastify.register(clerkPlugin);
+fastify.register(clerkPlugin;
 
 fastify.get("/health", (request, reply) => {
   return reply.status(200).send({
@@ -21,12 +23,15 @@ fastify.get("/test", { preHandler: isUserAuthenticated }, (request, reply) => {
   });
 });
 
+fastify.register(orderRoute);
+
 const start = async () => {
   try {
+    await connectOrderDB();
     await fastify.listen({ port: 8001 });
     console.log("Order Service is running on port 8001");
   } catch (error) {
-    fastify.log.error(error);
+    console.log(error);
     process.exit(1);
   }
 };
