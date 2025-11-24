@@ -17,7 +17,7 @@ export const isUserAuthenticated = createMiddleware<{
 
   c.set("userId", auth.userId);
 
-  await next();
+  return next();
 });
 
 export const isAdminAuthenticated = createMiddleware<{
@@ -43,5 +43,5 @@ export const isAdminAuthenticated = createMiddleware<{
 
   c.set("userId", auth.userId);
 
-  await next();
+  return next();
 });

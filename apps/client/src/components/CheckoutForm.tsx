@@ -36,7 +36,7 @@ const CheckoutForm = ({
   return (
     <form>
       <PaymentElement options={{ layout: "accordion" }} />
-      <button disabled={loading} onClick={handleClick}>
+      <button className="w-full mt-4 bg-gray-800 hover:bg-gray-900 transition-all duration-300 text-white p-2 rounded-lg cursor-pointer flex items-center justify-center gap-2">
         {loading ? "Loading..." : "Pay"}
       </button>
       {error && <div className="">{error.message}</div>}

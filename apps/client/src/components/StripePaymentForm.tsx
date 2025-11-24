@@ -8,7 +8,7 @@ import { CartItemsType, ShippingFormInputs } from "@repo/types";
 import CheckoutForm from "./CheckoutForm";
 import useCartStore from "@/stores/cartStore";
 
-const stripe = loadStripe(process.env.STRIPE_PUBLIC_KEY as string);
+const stripe = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY as string);
 
 const fetchClientSecret = async (cart: CartItemsType, token: string) => {
   return fetch(

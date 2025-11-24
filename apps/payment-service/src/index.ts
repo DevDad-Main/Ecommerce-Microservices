@@ -2,8 +2,8 @@ import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { clerkMiddleware } from "@hono/clerk-auth";
 import stripe from "./utils/stripe.utils";
-import sessionRouter from "./routes/session.route";
 import { cors } from "hono/cors";
+import sessionRouter from "./routes/session.route";
 
 const app = new Hono();
 
@@ -18,7 +18,7 @@ app.get("/health", (c) => {
   });
 });
 
-app.route("/session", sessionRouter);
+app.route("/sessions", sessionRouter);
 
 //#region Test Stripe Routes
 // app.post("/create-stripe-product", async (c) => {
