@@ -8,9 +8,7 @@ import { CartItemsType, ShippingFormInputs } from "@repo/types";
 import CheckoutForm from "./CheckoutForm";
 import useCartStore from "@/stores/cartStore";
 
-const stripe = loadStripe(
-  "pk_test_51MdCLkDhkeDdZct5FkM9qMlMvAzsJpObS6eUy44jYLuVMhUFjYjzr4VLodA0GiUj0WBaOSzm38QJ8ju3SAYhdNkF00myyAyh6M"
-);
+const stripe = loadStripe(process.env.STRIPE_PUBLIC_KEY as string);
 
 const fetchClientSecret = async (cart: CartItemsType, token: string) => {
   return fetch(
@@ -24,7 +22,7 @@ const fetchClientSecret = async (cart: CartItemsType, token: string) => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-    }
+    },
   )
     .then((response) => response.json())
     .then((json) => json.checkoutSessionClientSecret);
