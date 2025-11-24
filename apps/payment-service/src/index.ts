@@ -4,6 +4,7 @@ import { clerkMiddleware, getAuth } from "@hono/clerk-auth";
 import { isUserAuthenticated } from "./middleware/auth.middleware";
 
 const app = new Hono();
+
 app.use("*", clerkMiddleware());
 
 app.get("/health", (c) => {

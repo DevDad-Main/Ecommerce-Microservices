@@ -1,14 +1,14 @@
 import Fastify from "fastify";
-import { clerkPlugin, getAuth } from "@clerk/fastify";
+import { clerkPlugin } from "@clerk/fastify";
 import { isUserAuthenticated } from "./middleware/auth.middleware";
 import { connectOrderDB } from "@repo/order-db";
 import { orderRoute } from "./routes/order.route";
 
 const fastify = Fastify();
 
-fastify.register(clerkPlugin;
+fastify.register(clerkPlugin);
 
-fastify.get("/health", (request, reply) => {
+fastify.get("/health", (_request, reply) => {
   return reply.status(200).send({
     status: "ok",
     uptime: process.uptime(),

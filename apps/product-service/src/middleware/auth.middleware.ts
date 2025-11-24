@@ -1,5 +1,8 @@
 import { getAuth } from "@clerk/express";
 import { NextFunction, Request, Response } from "express";
+import { catchAsync } from "../utils/catchAsync";
+import { AppError } from "../utils/AppError";
+import type { CustomJwtSessionClaims } from "@repo/types";
 
 declare global {
   namespace Express {
@@ -9,19 +12,39 @@ declare global {
   }
 }
 
-export const isUserAuthenticated = (
+export const isUserAuthenticated = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const auth = getAuth(req);
+    const userId = auth.userId;
+
+    if (!userId) {
+      return next(new AppError("You are not logged in", 401));
+    }
+
+    req.userId = userId;
+
+    return next();
+  },
+);
+
+export const isAdminAuthenticated = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
   const auth = getAuth(req);
-  const userId = auth.userId;
 
-  if (!userId) {
-    return res.status(401).json({ message: "You are not logged in" });
+  if (!auth.userId) {
+    return next(new AppError("You are not logged in", 401));
   }
 
-  req.userId = userId;
+  const claims = auth.sessionClaims as CustomJwtSessionClaims;
 
-  return next();
+  if (claims.metadata?.role !== "admin") {
+    return res
+      .status(403)
+      .send({ message: "Unauthorized, You do not have the required role." });
+  }
+
+  req.userId = auth.userId;
 };
