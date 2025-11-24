@@ -41,13 +41,31 @@ export const createProduct = catchAsync(
 );
 //#endregion
 
+//#region PUT: Update Product
 export const updateProduct = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
     const data: Prisma.ProductUpdateInput = req.body;
+    const { colors, images } = data;
 
     if (!id) {
       return next(new AppError("Product ID is required", 400));
+    }
+
+    if (!colors || !Array.isArray(colors) || colors.length === 0) {
+      return next(new AppError("No Colors Provided", 400));
+    }
+
+    if (!images || typeof images !== "object") {
+      return next(new AppError("No Images Provided", 400));
+    }
+
+    const missingColours = colors.filter((color) => !(color in images));
+
+    if (missingColours.length > 0) {
+      return next(
+        new AppError(`Missing Images For Colours: ${missingColours}`, 400),
+      );
     }
 
     const updatedProduct = await prisma.product.update({
@@ -62,7 +80,9 @@ export const updateProduct = catchAsync(
     return res.status(200).json({ success: true, product: updatedProduct });
   },
 );
+//#endregion
 
+//#region DELETE: Delete Product
 export const deleteProduct = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
@@ -82,6 +102,7 @@ export const deleteProduct = catchAsync(
     return res.status(200).json({ success: true, message: "Product Deleted" });
   },
 );
+//#endregion
 
 //#region GET: Get All Products
 export const getProducts = catchAsync(
