@@ -41,8 +41,47 @@ export const createProduct = catchAsync(
 );
 //#endregion
 
-export const updateProduct = async (req: Request, res: Response) => {};
-export const deleteProduct = async (req: Request, res: Response) => {};
+export const updateProduct = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+    const data: Prisma.ProductUpdateInput = req.body;
+
+    if (!id) {
+      return next(new AppError("Product ID is required", 400));
+    }
+
+    const updatedProduct = await prisma.product.update({
+      where: { id: Number(id) },
+      data,
+    });
+
+    if (!updatedProduct) {
+      return next(new AppError("Product Not Updated", 400));
+    }
+
+    return res.status(200).json({ success: true, product: updatedProduct });
+  },
+);
+
+export const deleteProduct = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+
+    if (!id) {
+      return next(new AppError("Product ID is required", 400));
+    }
+
+    const productToDelete = await prisma.product.delete({
+      where: { id: Number(id) },
+    });
+
+    if (!productToDelete) {
+      return next(new AppError("Product Failed To Delete", 400));
+    }
+
+    return res.status(200).json({ success: true, message: "Product Deleted" });
+  },
+);
 
 //#region GET: Get All Products
 export const getProducts = catchAsync(
