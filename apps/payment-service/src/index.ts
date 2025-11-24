@@ -2,6 +2,7 @@ import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { clerkMiddleware, getAuth } from "@hono/clerk-auth";
 import { isUserAuthenticated } from "./middleware/auth.middleware";
+import stripe from "./utils/stripe.utils";
 
 const app = new Hono();
 
@@ -15,12 +16,29 @@ app.get("/health", (c) => {
   });
 });
 
-app.get("/test", isUserAuthenticated, (c) => {
-  return c.json({
-    message: "You are logged in",
-    userId: c.get("userId"),
-  });
-});
+//#region Test Stripe Routes
+// app.post("/create-stripe-product", async (c) => {
+//   const res = await stripe.products.create({
+//     id: "123",
+//     name: "Test Product",
+//     description: "Test Product Description",
+//     default_price_data: {
+//       currency: "pln",
+//       unit_amount: 10 * 100,
+//     },
+//   });
+//
+//   return c.json(res);
+// });
+//
+// app.get("/stripe-product-price", async (c) => {
+//   const res = await stripe.prices.list({
+//     product: "123",
+//   });
+//
+//   return c.json(res);
+// });
+//#endregion
 
 const start = async () => {
   try {
