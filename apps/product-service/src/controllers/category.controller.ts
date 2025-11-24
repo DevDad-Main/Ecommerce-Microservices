@@ -18,7 +18,7 @@ export const createCategory = catchAsync(
 
     return res
       .status(201)
-      .json({ success: true, product: category, message: "Product Created." });
+      .json({ success: true, product: category, message: "Category Created." });
   },
 );
 //#endregion
