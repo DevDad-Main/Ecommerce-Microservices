@@ -41,14 +41,15 @@ sessionRoute.post(
         line_items: lineItems,
         client_reference_id: userId,
         mode: "payment",
-        ui_mode: "custom",
-        return_url:
+        // Hosted Checkout redirect, not embedded
+        success_url:
           "http://localhost:3002/return?session_id={CHECKOUT_SESSION_ID}",
+        cancel_url: "http://localhost:3002/cart",
       });
 
       console.log("Stripe Created Session: ", session);
 
-      return c.json({ checkoutSessionClientSecret: session.client_secret });
+      return c.json({ id: session.id, lineItems });
     } catch (error) {
       console.log(error);
       return c.json(error);
