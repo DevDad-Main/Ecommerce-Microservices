@@ -6,6 +6,7 @@ import { getStripeProductPrice } from "../utils/stripeProduct.utils";
 
 const sessionRoute = new Hono();
 
+//#region POST Create Checkout Session
 sessionRoute.post(
   "/create-checkout-session",
   isUserAuthenticated,
@@ -33,6 +34,8 @@ sessionRoute.post(
       }),
     );
 
+    // console.log(lineItems);
+
     try {
       const session = await stripe.checkout.sessions.create({
         line_items: lineItems,
@@ -43,7 +46,7 @@ sessionRoute.post(
           "http://localhost:3002/return?session_id={CHECKOUT_SESSION_ID}",
       });
 
-      console.log(session);
+      // console.log(session);
 
       return c.json({ checkoutSessionClientSecret: session.client_secret });
     } catch (error) {
@@ -52,5 +55,22 @@ sessionRoute.post(
     }
   },
 );
+//#endregion
+
+//#region GET: Get Session ID
+sessionRoute.get("/:session_id", async (c) => {
+  const { session_id } = c.req.param();
+  const session = await stripe.checkout.sessions.retrieve(session_id, {
+    expand: ["line_items"],
+  });
+
+  console.log(session);
+
+  return c.json({
+    status: session.status,
+    paymentStatus: session.payment_status,
+  });
+});
+//#endregion
 
 export default sessionRoute;
