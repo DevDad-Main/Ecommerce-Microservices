@@ -15,7 +15,7 @@ sessionRoute.post(
     const userId = c.get("userId");
 
     if (!userId) {
-      return c.json({ status: 404, message: "User not found" });
+      return c.json({ message: "User not found" }, 404);
     }
 
     const lineItems = await Promise.all(
@@ -46,7 +46,7 @@ sessionRoute.post(
           "http://localhost:3002/return?session_id={CHECKOUT_SESSION_ID}",
       });
 
-      // console.log(session);
+      console.log("Stripe Created Session: ", session);
 
       return c.json({ checkoutSessionClientSecret: session.client_secret });
     } catch (error) {
@@ -60,9 +60,13 @@ sessionRoute.post(
 //#region GET: Get Session ID
 sessionRoute.get("/:session_id", async (c) => {
   const { session_id } = c.req.param();
-  const session = await stripe.checkout.sessions.retrieve(session_id, {
-    expand: ["line_items"],
-  });
+  console.log(session_id);
+  const session = await stripe.checkout.sessions.retrieve(
+    session_id as string,
+    {
+      expand: ["line_items"],
+    },
+  );
 
   console.log(session);
 
