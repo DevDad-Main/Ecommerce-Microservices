@@ -1,3 +1,5 @@
+import "dotenv/config";
+
 export { connection } from "./configs/client";
 export {
   addStripeProductUploadJob,

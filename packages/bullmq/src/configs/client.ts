@@ -1,3 +1,5 @@
+import "dotenv/config";
+
 interface RedisConnection {
   host: string;
   port: number;

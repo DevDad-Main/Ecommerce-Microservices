@@ -4,6 +4,8 @@ import type {
   StripeProductUploadJobData,
   StripeProductUploadJobReturnData,
 } from "./stripeProduct.types";
+import { createStripeProduct } from "../../utils/stripeProduct.utils";
+import { StripeProductType } from "@repo/types";
 
 export const stripeProductWorker = new Worker<
   StripeProductUploadJobData,
@@ -19,6 +21,14 @@ export const stripeProductWorker = new Worker<
 
     job.log(`Received job: ${job.id}`);
     job.log(`Received Data: ${job.data}`);
+
+    const stripeProduct: StripeProductType = {
+      id,
+      name,
+      price,
+    };
+
+    await createStripeProduct(stripeProduct);
 
     return { id, name, price };
   },
