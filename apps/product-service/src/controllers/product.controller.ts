@@ -2,6 +2,8 @@ import { prisma, Prisma } from "@repo/product-db";
 import { NextFunction, Request, Response } from "express";
 import { catchAsync } from "../utils/catchAsync";
 import { AppError } from "../utils/AppError";
+import { addStripeProductUploadJob, connection } from "@repo/bullmq";
+import { StripeProductType } from "@repo/types";
 
 //#region POST: Create Product
 export const createProduct = catchAsync(
@@ -34,9 +36,18 @@ export const createProduct = catchAsync(
       return next(new AppError("Product Not Created", 400));
     }
 
+    const stripeProduct: StripeProductType = {
+      id: product.id.toString(),
+      name: product.name,
+      price: product.price,
+    };
+
+    const job = await addStripeProductUploadJob(stripeProduct);
+    console.log(job);
+
     return res
       .status(201)
-      .json({ success: true, product, message: "Product Created." });
+      .json({ success: true, product, message: "Product Created.", job });
   },
 );
 //#endregion
