@@ -17,7 +17,7 @@
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "@repo/product-db": "workspace:*",
-    "@repo/bullmq": "workspace"
+    "@repo/bullmq": "workspace:*"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",

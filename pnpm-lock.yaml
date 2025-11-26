@@ -310,6 +310,9 @@ importers:
       bullmq:
         specifier: ^5.65.0
         version: 5.65.0
+      stripe:
+        specifier: ^20.0.0
+        version: 20.0.0(@types/node@24.10.1)
     devDependencies:
       '@repo/typescript-config':
         specifier: workspace:*
@@ -7086,6 +7089,12 @@ snapshots:
       qs: 6.14.0
     optionalDependencies:
       '@types/node': 20.19.13
+
+  stripe@20.0.0(@types/node@24.10.1):
+    dependencies:
+      qs: 6.14.0
+    optionalDependencies:
+      '@types/node': 24.10.1
 
   styled-jsx@5.1.6(react@19.1.0):
     dependencies:
