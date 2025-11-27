@@ -1,6 +1,6 @@
 import { Queue } from "bullmq";
 import { connection } from "../../configs/client";
-import type { StripeProductUploadJobData } from "./stripeProduct.types.ts";
+import type { StripeProductUploadJobData } from "./stripeProductCreation.types.ts";
 
 class StripeProductQueue {
   private static instance: Queue;

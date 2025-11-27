@@ -3,7 +3,7 @@ import { connection } from "../../configs/client";
 import type {
   StripeProductUploadJobData,
   StripeProductUploadJobReturnData,
-} from "./stripeProduct.types";
+} from "./stripeProductCreation.types";
 import { createStripeProduct } from "../../utils/stripeProduct.utils";
 import { StripeProductType } from "@repo/types";
 

@@ -2,7 +2,11 @@ import { prisma, Prisma } from "@repo/product-db";
 import { NextFunction, Request, Response } from "express";
 import { catchAsync } from "../utils/catchAsync";
 import { AppError } from "../utils/AppError";
-import { addStripeProductUploadJob, connection } from "@repo/bullmq";
+import {
+  addStripeProductDeletionJob,
+  addStripeProductUploadJob,
+  connection,
+} from "@repo/bullmq";
 import { StripeProductType } from "@repo/types";
 
 //#region POST: Create Product
@@ -110,6 +114,7 @@ export const deleteProduct = catchAsync(
       return next(new AppError("Product Failed To Delete", 400));
     }
 
+    //TODO: Add Delete Job
     return res.status(200).json({ success: true, message: "Product Deleted" });
   },
 );

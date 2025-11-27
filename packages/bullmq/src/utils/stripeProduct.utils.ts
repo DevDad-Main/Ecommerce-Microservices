@@ -18,6 +18,16 @@ export const createStripeProduct = async (item: StripeProductType) => {
   }
 };
 
+export const deleteStripeProduct = async (productId: number) => {
+  try {
+    const res = await stripe.products.del(productId.toString());
+    return res;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
 export const getStripeProductPrice = async (productId: number) => {
   try {
     const res = await stripe.prices.list({
