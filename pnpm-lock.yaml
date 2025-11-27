@@ -258,6 +258,9 @@ importers:
         specifier: ^20.0.0
         version: 20.0.0(@types/node@20.19.13)
     devDependencies:
+      '@repo/bullmq':
+        specifier: workspace:*
+        version: link:../../packages/bullmq
       '@repo/types':
         specifier: workspace:*
         version: link:../../packages/types

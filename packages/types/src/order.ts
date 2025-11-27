@@ -1,7 +1,15 @@
-import { OrderSchemaType } from "@repo/order-db";
+// import {  } from "@repo/order-db";
+
+export interface OrderSchemaType {
+  userId: string;
+  email: string;
+  amount: number;
+  status: string;
+  products: ProductItem[];
+}
 
 export type OrderType = OrderSchemaType & {
-  _id: string;
+  _id?: string;
 };
 
 export type OrderChartType = {
@@ -9,3 +17,9 @@ export type OrderChartType = {
   total: number;
   successful: number;
 };
+
+export interface ProductItem {
+  name: string;
+  quantity: number;
+  price: number;
+}

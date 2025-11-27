@@ -1,6 +1,7 @@
 import { Hono } from "hono";
 import Stripe from "stripe";
 import stripe from "../utils/stripe.utils";
+import { addStripeSuccessfulPaymentOrderJob } from "@repo/bullmq";
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET as string;
 const webhookRoute = new Hono();
@@ -25,8 +26,17 @@ webhookRoute.post("/stripe", async (c) => {
         session.id,
       );
 
-      //TODO: Create Order
-      console.log("WEBHOOK RECEIVED", session);
+      await addStripeSuccessfulPaymentOrderJob({
+        userId: session.client_reference_id as string,
+        email: session.customer_details?.email as string,
+        amount: session.amount_total as number,
+        status: session.payment_status === "paid" ? "success" : "failed",
+        products: lineItems.data?.map((item) => ({
+          name: item.description as string,
+          quantity: item.quantity as number,
+          price: item.price?.unit_amount as number,
+        })),
+      });
       break;
 
     default:
