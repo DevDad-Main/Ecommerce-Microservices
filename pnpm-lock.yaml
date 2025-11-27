@@ -325,6 +325,9 @@ importers:
       dotenv:
         specifier: ^17.2.3
         version: 17.2.3
+      mongoose:
+        specifier: ^8.18.1
+        version: 8.18.1
       stripe:
         specifier: ^20.0.0
         version: 20.0.0(@types/node@24.10.1)

@@ -13,14 +13,15 @@
     ".": "./src/index.ts"
   },
   "devDependencies": {
+    "@repo/order-db": "workspace:*",
     "@repo/types": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "@types/node": "^24.3.1",
-    "@repo/order-db": "workspace:*"
+    "@types/node": "^24.3.1"
   },
   "dependencies": {
     "bullmq": "^5.65.0",
     "dotenv": "^17.2.3",
+    "mongoose": "^8.18.1",
     "stripe": "^20.0.0"
   }
 }
