@@ -317,6 +317,9 @@ importers:
         specifier: ^20.0.0
         version: 20.0.0(@types/node@24.10.1)
     devDependencies:
+      '@repo/order-db':
+        specifier: workspace:*
+        version: link:../order-db
       '@repo/types':
         specifier: workspace:*
         version: link:../types

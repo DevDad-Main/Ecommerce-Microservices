@@ -1,10 +1,10 @@
 import { Worker, type JobsOptions } from "bullmq";
-import { connection } from "../../configs/client";
+import { connection } from "../../../configs/client";
 import type {
   StripeProductUploadJobData,
   StripeProductUploadJobReturnData,
 } from "./stripeProductCreation.types";
-import { createStripeProduct } from "../../utils/stripeProduct.utils";
+import { createStripeProduct } from "../../../utils/stripeProduct.utils";
 import { StripeProductType } from "@repo/types";
 
 export const stripeProductWorker = new Worker<

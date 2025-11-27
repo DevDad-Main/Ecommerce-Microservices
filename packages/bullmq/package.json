@@ -15,7 +15,8 @@
   "devDependencies": {
     "@repo/types": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "@types/node": "^24.3.1"
+    "@types/node": "^24.3.1",
+    "@repo/order-db": "workspace:*"
   },
   "dependencies": {
     "bullmq": "^5.65.0",

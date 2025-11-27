@@ -1,13 +1,13 @@
 import { Queue } from "bullmq";
-import { connection } from "../../configs/client";
-import type { StripeProductUploadJobData } from "./stripeProductCreation.types.ts";
+import { connection } from "../../../configs/client";
+import { OrderType } from "@repo/types";
 
-class StripeProductQueue {
+class StripeSuccessfulPaymentQueue {
   private static instance: Queue;
 
   static getQueue(): Queue {
     if (!this.instance) {
-      this.instance = new Queue("stripe-product-creation", {
+      this.instance = new Queue("stripe-payment-success-order", {
         defaultJobOptions: {
           attempts: 3,
           backoff: { type: "exponential", delay: 5000 },
@@ -20,16 +20,17 @@ class StripeProductQueue {
     return this.instance;
   }
 
-  static async add(data: StripeProductUploadJobData, opts = {}) {
-    return this.getQueue().add("stripe-product-creation", data, {
-      jobId: data.id ? `upload:${data.name}:${data.price}` : undefined,
+  static async add(data: OrderType, opts = {}) {
+    return this.getQueue().add("stripe-payment-success-order", data, {
+      jobId: data._id ? `Delete:${data._id}` : undefined,
       ...opts,
     });
   }
 }
 
-export const stripeProductQueue = StripeProductQueue.getQueue();
+export const stripeProductDeletionQueue =
+  StripeSuccessfulPaymentQueue.getQueue();
 
 //NOTE: Again this is one of those issues with javasc/typesc this context, as we loose it when we re-asign so we could add a wrapper arrow function or just use the .bind to bind contexts
-export const addStripeProductUploadJob =
-  StripeProductQueue.add.bind(StripeProductQueue);
+export const addStripeSuccessfulPaymentOrderJob =
+  StripeSuccessfulPaymentQueue.add.bind(StripeSuccessfulPaymentQueue);
