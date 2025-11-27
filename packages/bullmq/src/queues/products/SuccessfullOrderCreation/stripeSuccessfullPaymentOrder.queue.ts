@@ -28,7 +28,7 @@ class StripeSuccessfulPaymentQueue {
   }
 }
 
-export const stripeProductDeletionQueue =
+export const stripeSuccessfulPaymentQueue =
   StripeSuccessfulPaymentQueue.getQueue();
 
 //NOTE: Again this is one of those issues with javasc/typesc this context, as we loose it when we re-asign so we could add a wrapper arrow function or just use the .bind to bind contexts

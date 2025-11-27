@@ -26,6 +26,7 @@ webhookRoute.post("/stripe", async (c) => {
         session.id,
       );
 
+      console.log("We should now add our job to the queue...");
       await addStripeSuccessfulPaymentOrderJob({
         userId: session.client_reference_id as string,
         email: session.customer_details?.email as string,

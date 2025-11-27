@@ -23,7 +23,10 @@ export type { StripeProductDeletionJobData } from "./queues/products/ProductDele
 //#endregion
 
 //#region Stripe Successful Payment Order Exports
-export { addStripeSuccessfulPaymentOrderJob } from "./queues/products/SuccessfullOrderCreation/stripeSuccessfullPaymentOrder.queue";
+export {
+  addStripeSuccessfulPaymentOrderJob,
+  stripeSuccessfulPaymentQueue,
+} from "./queues/products/SuccessfullOrderCreation/stripeSuccessfullPaymentOrder.queue";
 export { stripeSuccessfulPaymentWorker } from "./queues/products/SuccessfullOrderCreation/stripeSuccessfullPaymentOrder.worker";
 //#endregion
 

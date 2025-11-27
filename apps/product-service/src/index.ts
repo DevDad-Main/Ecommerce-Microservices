@@ -4,6 +4,14 @@ import { clerkMiddleware } from "@clerk/express";
 import productRouter from "./routes/product.route";
 import categoryRouter from "./routes/category.route";
 import { errorHandler } from "./utils/errorHandler";
+import {
+  stripeProductDeletionQueue,
+  stripeProductQueue,
+  stripeSuccessfulPaymentQueue,
+} from "@repo/bullmq";
+import { ExpressAdapter } from "@bull-board/express";
+import { createBullBoard } from "@bull-board/api";
+import { BullMQAdapter } from "@bull-board/api/bullMQAdapter";
 
 //#region Constants
 const app = express();
@@ -41,8 +49,27 @@ app.use("/products", productRouter);
 app.use("/categories", categoryRouter);
 //#endregion
 
+//#region BullMQ BullBoard
+const serverAdapter = new ExpressAdapter();
+serverAdapter.setBasePath("/admin/queues");
+
+// NOTE: Attach the queues to the dashboard
+createBullBoard({
+  queues: [
+    new BullMQAdapter(stripeProductDeletionQueue),
+    new BullMQAdapter(stripeProductQueue),
+    new BullMQAdapter(stripeSuccessfulPaymentQueue),
+  ],
+  serverAdapter,
+});
+
+// NOTE: Mount the dashboard route
+app.use("/admin/queues", serverAdapter.getRouter());
+//#endregion
+
 app.use(errorHandler);
 
 app.listen(8000, () => {
   console.log("Product Service is running on port 8000");
+  console.log(`BullMQ Board is running at: http://localhost:8000/admin/queues`);
 });

@@ -47,7 +47,7 @@ sessionRoute.post(
         cancel_url: "http://localhost:3002/cart",
       });
 
-      console.log("Stripe Created Session: ", session);
+      // console.log("Stripe Created Session: ", session);
 
       return c.json({ id: session.id, lineItems });
     } catch (error) {
@@ -69,7 +69,7 @@ sessionRoute.get("/:session_id", async (c) => {
     },
   );
 
-  console.log(session);
+  // console.log(session);
 
   return c.json({
     status: session.status,

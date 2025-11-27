@@ -4,7 +4,7 @@ import { createOrder } from "../../../utils/createOrder.utils";
 import { OrderType } from "@repo/types";
 
 export const stripeSuccessfulPaymentWorker = new Worker<OrderType>(
-  "stripe-product-deletion",
+  "stripe-payment-success-order",
   async (job): Promise<void> => {
     const { userId, email, amount, status, products } = job.data;
     job.log(`Received Job Data: ${job.data}`);
