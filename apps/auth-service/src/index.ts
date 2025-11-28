@@ -1,16 +1,7 @@
 import express, { Request, response, Response } from "express";
 import cors from "cors";
 import { clerkMiddleware } from "@clerk/express";
-import { errorHandler } from "./utils/errorHandler";
-import {
-  stripeSuccessfulDeletionQueue,
-  stripeSuccessfulProductQueue,
-  stripeSuccessfulPaymentQueue,
-} from "@repo/bullmq";
-import { ExpressAdapter } from "@bull-board/express";
-import { createBullBoard } from "@bull-board/api";
-import { BullMQAdapter } from "@bull-board/api/bullMQAdapter";
-import { isUserAuthenticated } from "./middleware/auth.middleware";
+import { errorHandler } from "./utils/errorHandler.utils";
 import userRouter from "./routes/user.route";
 
 //#region Constants

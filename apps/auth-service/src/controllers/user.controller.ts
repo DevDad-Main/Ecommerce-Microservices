@@ -21,9 +21,9 @@ export const getClerkUserById = catchAsync(
     if (!id) {
       return next(new AppError("User ID is required", 400));
     }
-    const users = await clerkClient.users.getUser(id);
+    const user = await clerkClient.users.getUser(id);
 
-    return res.status(200).json(users);
+    return res.status(200).json(user);
   },
 );
 //#endregion
@@ -53,9 +53,9 @@ export const deleteClerkUserById = catchAsync(
     if (!id) {
       return next(new AppError("User ID is required", 400));
     }
-    const users = await clerkClient.users.deleteUser(id);
+    const user = await clerkClient.users.deleteUser(id);
 
-    return res.status(200).json(users);
+    return res.status(200).json(user);
   },
 );
 //#endregion
