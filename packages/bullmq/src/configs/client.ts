@@ -9,15 +9,22 @@ interface RedisConnection {
 }
 
 //#region Redis Connection
+// export const connection: RedisConnection = {
+//   host: process.env.REDIS_HOST!,
+//   port: Number(process.env.REDIS_PORT!),
+//   password: process.env.REDIS_PASSWORD!,
+//   username: process.env.REDIS_USERNAME,
+//   tls: {}, // ALWAYS enable TLS for Upstash (dev + prod)
+// };
+
 export const connection: RedisConnection = {
-  host: process.env.REDIS_HOST!,
-  port: Number(process.env.REDIS_PORT!),
-  password: process.env.REDIS_PASSWORD!,
-  username: process.env.REDIS_USERNAME,
-  tls: {}, // ALWAYS enable TLS for Upstash (dev + prod)
+  host: "127.0.0.1",
+  port: 6379,
+  username: "default",
+  // tls: {},
 };
 //#endregion
-//
+
 console.log("BullMQ connecting to:", {
   host: connection.host,
   port: connection.port,

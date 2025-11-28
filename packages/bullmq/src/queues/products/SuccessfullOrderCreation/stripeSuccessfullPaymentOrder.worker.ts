@@ -8,9 +8,11 @@ export const stripeSuccessfulPaymentWorker = new Worker<OrderType>(
   async (job): Promise<void> => {
     const { userId, email, amount, status, products } = job.data;
     job.log(`Received Job Data: ${job.data}`);
-    job.log("Creating Order...");
     const order = job.data;
+    job.log("Creating Order...");
     await createOrder(order);
+
+    job.log(`Order created for User: → ${order.userId}`);
   },
   { connection },
 );
