@@ -1,135 +1,227 @@
-# Turborepo starter
+# Ecommerce Microservices
 
-This Turborepo starter is maintained by the Turborepo core team.
+A modern, scalable e-commerce platform built with microservices architecture using Turborepo for monorepo management. This project demonstrates best practices for building distributed systems with separate concerns for products, orders, payments, and administration.
 
-## Using this example
+## 🏗️ Architecture
 
-Run the following command:
+This monorepo consists of multiple services and applications, each handling specific business domains:
 
-```sh
-npx create-turbo@latest
+### Applications
+
+- **Client** (`apps/client`): Customer-facing Next.js application for browsing products, managing cart, and checkout
+- **Admin** (`apps/admin`): Administrative dashboard for managing products, categories, and orders
+
+### Microservices
+
+- **Product Service** (`apps/product-service`): REST API for product and category management using Express.js
+- **Order Service** (`apps/order-service`): Order processing service using Fastify
+- **Payment Service** (`apps/payment-service`): Stripe payment processing with webhooks using Hono
+
+### Shared Packages
+
+- **Types** (`packages/types`): Shared TypeScript interfaces and schemas
+- **BullMQ** (`packages/bullmq`): Background job processing for Stripe operations
+- **Product DB** (`packages/product-db`): Prisma ORM for PostgreSQL product database
+- **Order DB** (`packages/order-db`): Mongoose ODM for MongoDB order database
+- **ESLint Config** (`packages/eslint-config`): Shared linting configuration
+- **TypeScript Config** (`packages/typescript-config`): Shared TypeScript configuration
+
+## 🚀 Features
+
+### Customer Features
+
+- Product catalog with categories, sizes, colors, and images
+- Shopping cart with persistent state
+- Secure checkout with Stripe integration
+- User authentication via Clerk
+- Order history and tracking
+- Responsive design with Tailwind CSS
+
+### Admin Features
+
+- Product management (CRUD operations)
+- Category management
+- Order overview and management
+- Dashboard with analytics
+- Image upload and management
+- Real-time data updates
+
+### Technical Features
+
+- Asynchronous job processing with BullMQ
+- Stripe webhook handling for payment confirmations
+- Database migrations with Prisma
+- Type-safe APIs with Zod validation
+- Background job queues for Stripe product sync
+- Monorepo tooling with Turborepo
+
+## 🛠️ Tech Stack
+
+### Frontend
+
+- **Next.js 15** - React framework with App Router
+- **React 19** - UI library
+- **TypeScript** - Type safety
+- **Tailwind CSS** - Styling
+- **Zustand** - State management
+- **React Hook Form** - Form handling
+- **Clerk** - Authentication
+- **Stripe Elements** - Payment UI
+
+### Backend Services
+
+- **Express.js** - REST API framework
+- **Fastify** - High-performance web framework
+- **Hono** - Lightweight web framework for payments
+- **Prisma** - Database ORM
+- **Mongoose** - MongoDB ODM
+- **BullMQ** - Job queue system
+
+### Infrastructure
+
+- **PostgreSQL** - Primary database for products
+- **MongoDB** - Document database for orders
+- **Redis** - Queue storage
+- **Stripe** - Payment processing
+- **Turborepo** - Monorepo build system
+
+## 📋 Prerequisites
+
+- Node.js >= 18
+- pnpm package manager
+- PostgreSQL database
+- MongoDB database
+- Redis instance
+- Stripe account
+
+## 🚀 Getting Started
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/Devdad-Main/Ecommerce-Microservices.git
+   cd Ecommerce-Microservices/
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   pnpm install
+   ```
+
+3. **Set up environment variables**
+
+   Copy the example environment files and configure:
+   - Database URLs (PostgreSQL, MongoDB)
+   - Redis connection
+   - Stripe API keys
+   - Clerk authentication keys
+
+4. **Set up databases**
+
+   ```bash
+   # Generate Prisma client and run migrations
+   pnpm run db:generate
+   pnpm run db:migrate
+   ```
+
+5. **Start development servers**
+
+   ```bash
+   pnpm run dev
+   ```
+
+   This will start all services concurrently:
+   - Client: http://localhost:3002
+   - Admin: http://localhost:3003
+   - Product Service: http://localhost:8000
+   - BullMQ Board: http://localhost:8000/admin/queues
+   - Order Service: http://localhost:8001
+   - Payment Service: http://localhost:8002
+
+## 📁 Project Structure
+
+```
+ecommerce-microservices/
+├── apps/
+│   ├── admin/          # Admin dashboard (Next.js)
+│   ├── client/         # Customer frontend (Next.js)
+│   ├── order-service/  # Order processing (Fastify)
+│   ├── payment-service/# Payment processing (Hono)
+│   └── product-service/# Product management (Express)
+├── packages/
+│   ├── bullmq/         # Job queue system
+│   ├── eslint-config/  # Shared ESLint config
+│   ├── order-db/       # Order database models
+│   ├── product-db/     # Product database schema
+│   ├── types/          # Shared TypeScript types
+│   └── typescript-config/ # Shared TS config
+├── package.json
+├── turbo.json
+└── pnpm-workspace.yaml
 ```
 
-## What's inside?
+## 🔧 Available Scripts
 
-This Turborepo includes the following packages/apps:
+- `pnpm run dev` - Start all services in development mode
+- `pnpm run build` - Build all applications and packages
+- `pnpm run lint` - Run ESLint across the monorepo
+- `pnpm run check-types` - Run TypeScript type checking
+- `pnpm run db:generate` - Generate Prisma client
+- `pnpm run db:migrate` - Run database migrations
 
-### Apps and Packages
+## 🔒 Authentication
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+The application uses Clerk for authentication with role-based access:
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+- **Customers**: Can browse products, manage cart, place orders
+- **Admins**: Full access to product and order management
 
-### Utilities
+## 💳 Payment Processing
 
-This Turborepo has some additional tools already setup for you:
+Stripe handles all payment processing with:
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+- Secure checkout sessions
+- Webhook handling for payment confirmations
+- Asynchronous order creation via job queues
+- Support for multiple currencies
 
-### Build
+## 🔄 Background Jobs
 
-To build all apps and packages, run the following command:
+BullMQ manages asynchronous operations:
 
-```
-cd my-turborepo
+- Stripe product creation/deletion
+- Order processing after successful payments
+- Image processing and optimization
 
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
+## 📊 Database Schema
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
-```
+### Products (PostgreSQL)
 
-You can build a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+- Products with variants (sizes, colors)
+- Categories with slug-based routing
+- Image storage with color-specific images
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
+### Orders (MongoDB)
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
+- Order history with user association
+- Product snapshots at time of purchase
+- Payment status tracking
 
-### Develop
+## 🤝 Contributing
 
-To develop all apps and packages, run the following command:
+1. Follow the existing code style and conventions
+2. Use TypeScript for all new code
+3. Add tests for new features
+4. Update documentation as needed
+5. Use conventional commits
 
-```
-cd my-turborepo
+## 📄 License
 
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
+This project is licensed under the ISC License.
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
-```
+## 🙏 Acknowledgments
 
-You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
-
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
-
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+- Built with modern web technologies and best practices
+- Inspired by scalable e-commerce architectures
+- Uses open-source tools and frameworks
