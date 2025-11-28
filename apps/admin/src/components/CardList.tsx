@@ -123,7 +123,7 @@ import { auth } from "@clerk/nextjs/server";
 // ];
 
 const CardList = async ({ title }: { title: string }) => {
-  let products: ProductsType = [];
+  let products = [];
   let orders: OrderType[] = [];
 
   const { getToken } = await auth();
@@ -131,7 +131,7 @@ const CardList = async ({ title }: { title: string }) => {
 
   if (title === "Popular Products") {
     products = await fetch(
-      `${process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL}/products?limit=5&popular=true`
+      `${process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL}/products?limit=5&popular=true`,
     ).then((res) => res.json());
   } else {
     orders = await fetch(
@@ -140,7 +140,7 @@ const CardList = async ({ title }: { title: string }) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     ).then((res) => res.json());
   }
 
@@ -149,7 +149,7 @@ const CardList = async ({ title }: { title: string }) => {
       <h1 className="text-lg font-medium mb-6">{title}</h1>
       <div className="flex flex-col gap-2">
         {title === "Popular Products"
-          ? products.map((item) => (
+          ? products.products?.map((item: any) => (
               <Card
                 key={item.id}
                 className="flex-row items-center justify-between gap-4 p-4"

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack --port 3003",
+    "dev": "node --version | grep -q '^v24' && next dev --port 3003 || node --version && echo 'Running admin on Node 24 via nve (installing if missing)...' && pnpm dlx nve@latest 24 next dev --port 3003",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
