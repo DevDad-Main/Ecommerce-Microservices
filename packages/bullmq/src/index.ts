@@ -36,7 +36,7 @@ export type {
 //#region Stripe Product Deletion Exports
 export {
   addStripeProductDeletionJob,
-  stripeProductDeletionQueue,
+  stripeSuccessfulDeletionQueue,
 } from "./queues/products/ProductDeletion/stripeProductDeletion.queue";
 export { stripeProductDeleteWorker } from "./queues/products/ProductDeletion/stripeProductDeletion.worker";
 export type { StripeProductDeletionJobData } from "./queues/products/ProductDeletion/stripeProductDeletion.types";
