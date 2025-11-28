@@ -24,7 +24,7 @@ let isConnected = false;
 //#region Stripe Product Creation Exports
 export {
   addStripeProductUploadJob,
-  stripeProductQueue,
+  stripeSuccessfulProductQueue,
 } from "./queues/products/ProductCreation/stripeProductCreation.queue";
 export { stripeProductWorker } from "./queues/products/ProductCreation/stripeProductCreation.worker";
 export type {

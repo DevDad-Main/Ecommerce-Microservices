@@ -6,7 +6,7 @@ import categoryRouter from "./routes/category.route";
 import { errorHandler } from "./utils/errorHandler";
 import {
   stripeProductDeletionQueue,
-  stripeProductQueue,
+  stripeSuccessfulProductQueue,
   stripeSuccessfulPaymentQueue,
 } from "@repo/bullmq";
 import { ExpressAdapter } from "@bull-board/express";
@@ -57,7 +57,7 @@ serverAdapter.setBasePath("/admin/queues");
 createBullBoard({
   queues: [
     new BullMQAdapter(stripeProductDeletionQueue),
-    new BullMQAdapter(stripeProductQueue),
+    new BullMQAdapter(stripeSuccessfulProductQueue),
     new BullMQAdapter(stripeSuccessfulPaymentQueue),
   ],
   serverAdapter,
