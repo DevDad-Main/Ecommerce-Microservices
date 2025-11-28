@@ -11,10 +11,11 @@ const fetchOrders = async () => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    }
+    },
   );
 
   const data: OrderType[] = await res.json();
+  console.log(data);
   return data;
 };
 
@@ -58,9 +59,11 @@ const OrdersPage = async () => {
               <span className="font-medium text-sm text-gray-500">
                 Products
               </span>
-              <p>{order.products?.map(product=> product.name).join(", ") || "-"}</p>
+              <p>
+                {order.products?.map((product) => product.name).join(", ") ||
+                  "-"}
+              </p>
             </div>
-            
           </li>
         ))}
       </ul>

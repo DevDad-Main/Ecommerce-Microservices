@@ -6,6 +6,7 @@ export interface OrderSchemaType {
   amount: number;
   status: string;
   products: ProductItem[];
+  createdAt?: string;
 }
 
 export type OrderType = OrderSchemaType & {

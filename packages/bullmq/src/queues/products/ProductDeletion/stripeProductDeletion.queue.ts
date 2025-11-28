@@ -1,5 +1,3 @@
-import { Queue } from "bullmq";
-import { connection } from "../../../configs/client";
 import GenericQueue from "../StripeQueue";
 import type { StripeProductDeletionJobData } from "./stripeProductDeletion.types.ts";
 

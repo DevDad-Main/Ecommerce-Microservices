@@ -25,10 +25,10 @@ import Image from "next/image";
 
 const fetchProduct = async (id: string) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL}/products/${id}`
+    `${process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL}/products/${id}`,
   );
-  const data: ProductType = await res.json();
-  return data;
+  const data = await res.json();
+  return data.product;
 };
 
 export const generateMetadata = async ({
@@ -36,7 +36,7 @@ export const generateMetadata = async ({
 }: {
   params: Promise<{ id: string }>;
 }) => {
-    const { id } = await params;
+  const { id } = await params;
 
   const product = await fetchProduct(id);
   return {
@@ -55,7 +55,7 @@ const ProductPage = async ({
   const { size, color } = await searchParams;
   const { id } = await params;
 
-  const product = await fetchProduct(id);
+  const product: ProductType = await fetchProduct(id);
 
   const selectedSize = size || (product.sizes[0] as string);
   const selectedColor = color || (product.colors[0] as string);
