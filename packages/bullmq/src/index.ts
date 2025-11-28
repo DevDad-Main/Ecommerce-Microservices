@@ -46,8 +46,8 @@ export type { StripeProductDeletionJobData } from "./queues/products/ProductDele
 export {
   addStripeSuccessfulPaymentOrderJob,
   stripeSuccessfulPaymentQueue,
-} from "./queues/products/SuccessfullOrderCreation/stripeSuccessfullPaymentOrder.queue";
-export { stripeSuccessfulPaymentWorker } from "./queues/products/SuccessfullOrderCreation/stripeSuccessfullPaymentOrder.worker";
+} from "./queues/products/OrderCreation/stripeSuccessfullPaymentOrder.queue";
+export { stripeSuccessfulPaymentWorker } from "./queues/products/OrderCreation/stripeSuccessfullPaymentOrder.worker";
 //#endregion
 
 console.log("All BullMQ workers started...");
