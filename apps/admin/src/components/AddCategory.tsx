@@ -48,8 +48,9 @@ const AddCategory = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
+      console.log(res);
       if (!res.ok) {
         throw new Error("Failed to create category!");
       }

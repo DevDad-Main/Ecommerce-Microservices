@@ -23,6 +23,7 @@ const MONTHS: Array<string> = [
 ];
 
 export const orderRoute = async (fastify: FastifyInstance) => {
+  //#region GET: Get User Orders -> User Dashboard
   fastify.get(
     "/user-orders",
     { preHandler: isUserAuthenticated },
@@ -32,17 +33,22 @@ export const orderRoute = async (fastify: FastifyInstance) => {
       return reply.send(orders);
     },
   );
+  //#endregion
 
+  //#region GET: Get All Orders -> Admin Dashboard
   fastify.get(
     "/orders",
     { preHandler: isAdminAuthenticated },
     async (request, reply) => {
-      const orders = await Order.find();
+      const { limit } = request.query as { limit: number };
+      const orders = await Order.find().limit(limit).sort({ createdAt: -1 });
 
       return reply.send(orders);
     },
   );
+  //#endregion
 
+  //#region GET: Get Order Chart
   fastify.get(
     "/order-chart",
     { preHandler: isAdminAuthenticated },
@@ -113,4 +119,5 @@ export const orderRoute = async (fastify: FastifyInstance) => {
       return reply.send(results);
     },
   );
+  //#endregion
 };
