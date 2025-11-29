@@ -1,7 +1,7 @@
 import { getAuth } from "@clerk/express";
 import { NextFunction, Request, Response } from "express";
-import { catchAsync } from "../utils/catchAsync";
-import { AppError } from "../utils/AppError";
+import { catchAsync } from "../utils/catchAsync.utils";
+import { AppError } from "../utils/AppError.utils";
 import type { CustomJwtSessionClaims } from "@repo/types";
 
 declare global {

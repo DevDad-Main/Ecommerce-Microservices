@@ -1,8 +1,7 @@
 import { Router } from "express";
-import { catchAsync } from "../utils/catchAsync.utils";
-import { clerkClient } from "../utils/clerk.utils";
 import {
   createClerkUser,
+  deleteClerkUserById,
   getClerkUserById,
   getClerkUserList,
 } from "../controllers/user.controller";
@@ -14,6 +13,6 @@ userRouter.use(isAdminAuthenticated);
 
 userRouter.route("/").get(getClerkUserList).post(createClerkUser);
 
-userRouter.route("/:id").get(getClerkUserById).delete();
+userRouter.route("/:id").get(getClerkUserById).delete(deleteClerkUserById);
 
 export default userRouter;

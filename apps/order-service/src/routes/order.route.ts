@@ -5,6 +5,22 @@ import {
 } from "../middleware/auth.middleware";
 import { Order } from "@repo/order-db";
 import { startOfMonth, subMonths } from "date-fns";
+import { OrderChartType } from "@repo/types";
+
+const MONTHS: Array<string> = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 
 export const orderRoute = async (fastify: FastifyInstance) => {
   fastify.get(
@@ -34,7 +50,7 @@ export const orderRoute = async (fastify: FastifyInstance) => {
       const now = new Date();
       const sixMonthsAgo = startOfMonth(subMonths(now, 5));
 
-      const raw = await Order.aggregate([
+      const aggregation = await Order.aggregate([
         {
           $match: {
             createdAt: {
@@ -75,6 +91,26 @@ export const orderRoute = async (fastify: FastifyInstance) => {
           },
         },
       ]);
+
+      const results: OrderChartType[] = [];
+
+      for (let i = 5; i >= 0; i--) {
+        const d = subMonths(now, i);
+        const year = d.getFullYear();
+        const month = d.getMonth() + 1;
+
+        const isAMatch = aggregation.find(
+          (item) => item.year === year && item.month === month,
+        );
+
+        results.push({
+          month: MONTHS[month - 1] as string,
+          total: isAMatch ? isAMatch.total : 0,
+          successful: isAMatch ? isAMatch.successful : 0,
+        });
+      }
+
+      return reply.send(results);
     },
   );
 };

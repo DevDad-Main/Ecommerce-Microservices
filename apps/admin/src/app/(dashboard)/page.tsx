@@ -4,6 +4,7 @@ import AppPieChart from "@/components/AppPieChart";
 import CardList from "@/components/CardList";
 import TodoList from "@/components/TodoList";
 import { auth } from "@clerk/nextjs/server";
+import { OrderChartType } from "@repo/types";
 
 const Homepage = async () => {
   const { getToken } = await auth();
@@ -12,20 +13,26 @@ const Homepage = async () => {
     `${process.env.NEXT_PUBLIC_ORDER_SERVICE_URL}/order-chart`,
     {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token ?? ""}`,
       },
     },
-  );
+  ).then(async (res) => {
+    if (!res.ok) {
+      throw new Error("Failed to fetch order chart data");
+    }
+    return (await res.json()) as OrderChartType[];
+  });
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 gap-4">
       <div className="bg-primary-foreground p-4 rounded-lg lg:col-span-2 xl:col-span-1 2xl:col-span-2">
-        {/*  <AppBarChart dataPromise={orderChartData} /> */}
+        <AppBarChart dataPromise={orderChartData} />
       </div>
       <div className="bg-primary-foreground p-4 rounded-lg">
         <CardList title="Latest Transactions" />
       </div>
       <div className="bg-primary-foreground p-4 rounded-lg">
-        // <AppPieChart />
+        <AppPieChart />
       </div>
       <div className="bg-primary-foreground p-4 rounded-lg">
         <TodoList />
