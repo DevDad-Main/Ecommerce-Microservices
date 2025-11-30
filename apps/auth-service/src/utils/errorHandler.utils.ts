@@ -45,7 +45,14 @@ const errorHandler = (
 ) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || "error";
-
+  // Add this for Extra In-Depth Error Logging
+  console.error("Error details:", {
+    message: err.message,
+    statusCode: err.statusCode,
+    errors: err.errors,
+    stack: err.stack,
+    fullError: err,
+  });
   if (process.env.NODE_ENV === "development") {
     sendErrorDev(err, res);
   } else {

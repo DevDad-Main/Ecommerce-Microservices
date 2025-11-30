@@ -35,5 +35,5 @@ app.use("/users", userRouter);
 app.use(errorHandler);
 
 app.listen(8003, () => {
-  console.log("Authentication Service is running on port 8000");
+  console.log("Authentication Service is running on port 8003");
 });

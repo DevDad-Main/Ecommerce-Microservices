@@ -33,18 +33,21 @@ export const isAdminAuthenticated = async (
   next: NextFunction,
 ) => {
   const auth = getAuth(req);
+  const userId = auth.userId;
 
-  if (!auth.userId) {
+  if (!userId) {
     return next(new AppError("You are not logged in", 401));
   }
 
   const claims = auth.sessionClaims as CustomJwtSessionClaims;
 
   if (claims.metadata?.role !== "admin") {
-    return res
-      .status(403)
-      .send({ message: "Unauthorized, You do not have the required role." });
+    return next(
+      new AppError("Unauthorized, You do not have the required role.", 400),
+    );
   }
 
   req.userId = auth.userId;
+
+  return next();
 };
