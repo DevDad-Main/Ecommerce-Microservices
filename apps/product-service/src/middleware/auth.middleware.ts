@@ -35,8 +35,6 @@ export const isAdminAuthenticated = async (
   const auth = getAuth(req);
   const userId = auth.userId;
 
-  console.log(auth);
-
   if (!userId) {
     return next(new AppError("You are not logged in", 401));
   }
