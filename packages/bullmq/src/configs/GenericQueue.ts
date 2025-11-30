@@ -1,6 +1,6 @@
 // queues/GenericQueue.ts
 import { Queue, Job, JobsOptions, QueueOptions } from "bullmq";
-import { connection } from "../../configs/client";
+import { connection } from "./client";
 
 export class GenericQueue<
   TData = any,

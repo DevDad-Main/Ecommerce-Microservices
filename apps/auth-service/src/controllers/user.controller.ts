@@ -2,6 +2,7 @@ import { clerkClient } from "@clerk/express";
 import { catchAsync } from "../utils/catchAsync.utils";
 import { NextFunction, Request, Response } from "express";
 import { AppError } from "../utils/AppError.utils";
+import { addNewUserEmailJob } from "@repo/bullmq";
 
 //#region GET: Get All Users
 export const getClerkUserList = catchAsync(
@@ -39,6 +40,11 @@ export const createClerkUser = catchAsync(
     if (!user) {
       return next(new AppError("Failed to creater new Clerk user", 400));
     }
+
+    await addNewUserEmailJob({
+      toEmail: user.emailAddresses[0]?.emailAddress!,
+      username: user.username!,
+    });
 
     return res.status(201).json(user);
   },

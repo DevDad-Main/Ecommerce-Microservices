@@ -54,6 +54,7 @@ This monorepo consists of multiple services and applications, each handling spec
 - Type-safe APIs with Zod validation
 - Background job queues for Stripe product sync
 - Monorepo tooling with Turborepo
+- Comprehensive backend testing with Vitest
 
 ## 🛠️ Tech Stack
 
@@ -76,6 +77,12 @@ This monorepo consists of multiple services and applications, each handling spec
 - **Prisma** - Database ORM
 - **Mongoose** - MongoDB ODM
 - **BullMQ** - Job queue system
+
+### Testing
+
+- **Vitest** - Fast unit and integration testing
+- **Supertest** - API endpoint testing
+- **Mocked dependencies** - Isolated testing for databases, auth, and external services
 
 ### Infrastructure
 
@@ -139,6 +146,16 @@ This monorepo consists of multiple services and applications, each handling spec
    - Order Service: http://localhost:8001
    - Payment Service: http://localhost:8002
 
+## 🧪 Testing
+
+The project includes comprehensive backend testing:
+
+- **Unit tests** for controllers, middleware, and utilities
+- **Integration tests** for API endpoints
+- **Mocked dependencies** for databases, authentication, and external services
+- Run `pnpm test` in individual service directories to execute tests
+- Current test coverage includes product-service auth middleware and category controllers
+
 ## 📁 Project Structure
 
 ```
@@ -169,6 +186,8 @@ ecommerce-microservices/
 - `pnpm run check-types` - Run TypeScript type checking
 - `pnpm run db:generate` - Generate Prisma client
 - `pnpm run db:migrate` - Run database migrations
+- `pnpm run test` - Run tests across all services
+- `pnpm run test:watch` - Run tests in watch mode
 
 ## 🔒 Authentication
 

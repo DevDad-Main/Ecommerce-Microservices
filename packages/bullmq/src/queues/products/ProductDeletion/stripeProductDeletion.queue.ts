@@ -1,4 +1,4 @@
-import GenericQueue from "../StripeQueue";
+import GenericQueue from "../../../configs/GenericQueue";
 import type { StripeProductDeletionJobData } from "./stripeProductDeletion.types.ts";
 
 const stripeProductDeletionQueue = GenericQueue.getQueue<

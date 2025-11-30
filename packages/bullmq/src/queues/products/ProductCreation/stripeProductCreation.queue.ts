@@ -1,5 +1,5 @@
 import type { StripeProductUploadJobData } from "./stripeProductCreation.types.ts";
-import GenericQueue from "../StripeQueue";
+import GenericQueue from "../../../configs/GenericQueue";
 
 const stripeProductQueue = GenericQueue.getQueue<
   StripeProductUploadJobData,

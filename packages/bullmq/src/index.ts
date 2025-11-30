@@ -50,4 +50,13 @@ export {
 export { stripeSuccessfulPaymentWorker } from "./queues/products/OrderCreation/stripeSuccessfullPaymentOrder.worker";
 //#endregion
 
+//#region Send New User Email Exports
+export {
+  addNewUserEmailJob,
+  sendNewUserEmailQueue,
+} from "./queues/email/NewUserEmail/newUserEmail.queue";
+export { sendNewUserEmailWorker } from "./queues/email/NewUserEmail/newUserEmail.worker";
+export type { NewUserEmailJobData } from "./queues/email/NewUserEmail/newUserEmail.types";
+//#endregion
+
 console.log("All BullMQ workers started...");

@@ -1,4 +1,4 @@
-import GenericQueue from "../StripeQueue";
+import GenericQueue from "../../../configs/GenericQueue";
 import { OrderType } from "@repo/types";
 
 const stripePaymentQueue = GenericQueue.getQueue<

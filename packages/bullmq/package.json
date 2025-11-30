@@ -16,12 +16,14 @@
     "@repo/order-db": "workspace:*",
     "@repo/types": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "@types/nodemailer": "^7.0.4",
     "@types/node": "^24.3.1"
   },
   "dependencies": {
     "bullmq": "^5.65.0",
     "dotenv": "^17.2.3",
     "mongoose": "^8.18.1",
-    "stripe": "^20.0.0"
+    "stripe": "^20.0.0",
+    "nodemailer": "^7.0.11"
   }
 }
