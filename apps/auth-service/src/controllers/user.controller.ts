@@ -1,5 +1,6 @@
 import { clerkClient } from "@clerk/express";
-import { catchAsync } from "../utils/catchAsync.utils";
+// import { catchAsync } from "../utils/catchAsync.utils";
+import { catchAsync } from "devdad-express-utils";
 import { NextFunction, Request, Response } from "express";
 import { AppError } from "../utils/AppError.utils";
 import { addNewUserEmailJob } from "@repo/bullmq";

@@ -18,12 +18,13 @@
     "@repo/bullmq": "workspace:*",
     "bullMQAdapter": "link:@bull-board/api/bullMQAdapter",
     "cors": "^2.8.5",
+    "devdad-express-utils": "^1.1.0",
     "express": "^5.1.0"
   },
   "devDependencies": {
     "@repo/types": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "@types/express": "^5.0.5",
-    "@types/cors": "^2.8.19"
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.5"
   }
 }
