@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "dev": "pnpm dlx tsx --env-file=.env --watch src/index.ts",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "test": "vitest",
+    "test:watch": "vitest --watch"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +27,14 @@
   "devDependencies": {
     "@repo/types": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "@types/express": "^5.0.5"
+    "@types/express": "^5.0.5",
+    "@types/jest": "^30.0.0",
+    "@types/supertest": "^6.0.3",
+    "@vitest/ui": "^4.0.14",
+    "jest": "^30.2.0",
+    "jest-environment-node": "29",
+    "supertest": "^7.1.4",
+    "ts-jest": "^29.4.5",
+    "vitest": "^4.0.14"
   }
 }
