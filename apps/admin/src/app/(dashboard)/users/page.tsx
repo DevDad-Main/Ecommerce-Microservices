@@ -12,7 +12,7 @@ const getData = async (): Promise<{ data: User[]; totalCount: number }> => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
     const data = await res.json();
     return data;

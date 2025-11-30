@@ -9,10 +9,9 @@ import { isAdminAuthenticated } from "../middleware/auth.middleware";
 
 const router: Router = Router();
 
-router.route("/").get(getCategories).post(isAdminAuthenticated, createCategory);
-router
-  .route("/:id")
-  .put(isAdminAuthenticated, updateCategory)
-  .delete(isAdminAuthenticated, deleteCategory);
+router.use(isAdminAuthenticated);
+
+router.route("/").get(getCategories).post(createCategory);
+router.route("/:id").put(updateCategory).delete(deleteCategory);
 
 export default router;

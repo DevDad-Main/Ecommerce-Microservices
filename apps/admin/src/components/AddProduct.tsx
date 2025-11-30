@@ -45,19 +45,26 @@ import { useAuth } from "@clerk/nextjs";
 //   "Gloves",
 // ] as const;
 
-const fetchCategories = async () => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL}/categories`
-  );
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch categories!");
-  }
-
-  return await res.json();
-};
-
 const AddProduct = () => {
+  const { getToken } = useAuth();
+
+  const fetchCategories = async () => {
+    const token = await getToken();
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL}/categories`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch categories!");
+    }
+
+    return await res.json();
+  };
   const form = useForm<z.infer<typeof ProductFormSchema>>({
     resolver: zodResolver(ProductFormSchema),
     defaultValues: {
@@ -77,8 +84,6 @@ const AddProduct = () => {
     queryFn: fetchCategories,
   });
 
-  const { getToken } = useAuth();
-
   const mutation = useMutation({
     mutationFn: async (data: z.infer<typeof ProductFormSchema>) => {
       const token = await getToken();
@@ -91,7 +96,7 @@ const AddProduct = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       if (!res.ok) {
         throw new Error("Failed to create product!");
@@ -194,7 +199,10 @@ const AddProduct = () => {
                       <FormItem>
                         <FormLabel>Category</FormLabel>
                         <FormControl>
-                          <Select onValueChange={field.onChange} value={field.value}>
+                          <Select
+                            onValueChange={field.onChange}
+                            value={field.value}
+                          >
                             <SelectTrigger>
                               <SelectValue placeholder="Select a category" />
                             </SelectTrigger>
@@ -234,7 +242,7 @@ const AddProduct = () => {
                                     field.onChange([...currentValues, size]);
                                   } else {
                                     field.onChange(
-                                      currentValues.filter((v) => v !== size)
+                                      currentValues.filter((v) => v !== size),
                                     );
                                   }
                                 }}
@@ -276,7 +284,9 @@ const AddProduct = () => {
                                       field.onChange([...currentValues, color]);
                                     } else {
                                       field.onChange(
-                                        currentValues.filter((v) => v !== color)
+                                        currentValues.filter(
+                                          (v) => v !== color,
+                                        ),
                                       );
                                     }
                                   }}
@@ -336,7 +346,7 @@ const AddProduct = () => {
                                       formData.append("file", file);
                                       formData.append(
                                         "upload_preset",
-                                        "ecommerce"
+                                        "ecommerce",
                                       );
 
                                       const res = await fetch(
@@ -344,7 +354,7 @@ const AddProduct = () => {
                                         {
                                           method: "POST",
                                           body: formData,
-                                        }
+                                        },
                                       );
                                       const data = await res.json();
 

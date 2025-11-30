@@ -89,7 +89,7 @@ export const getCategories = catchAsync(
       );
     }
 
-    return res.status(200).json({ success: true, categories });
+    return res.status(200).json(categories);
   },
 );
 //#endregion

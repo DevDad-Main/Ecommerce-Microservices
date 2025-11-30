@@ -39,6 +39,7 @@ const AddCategory = () => {
   const mutation = useMutation({
     mutationFn: async (data: z.infer<typeof CategoryFormSchema>) => {
       const token = await getToken();
+      console.log(token);
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL}/categories`,
         {
