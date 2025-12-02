@@ -65,7 +65,7 @@ export {
   sendOrderCreatedEmailQueue,
 } from "./queues/email/NewOrderCreated/newOrderCreated.queue";
 
-export { sendNewUserEmailWorker } from "./queues/email/NewOrderCreated/newOrderCreated.worker";
-export { NewelyCreatedOrderJobData } from "./queues/email/NewOrderCreated/newOrderCreated.types";
+export type { sendNewelyCreatedOrderEmailWorker } from "./queues/email/NewOrderCreated/newOrderCreated.worker";
+export type { NewelyCreatedOrderJobData } from "./queues/email/NewOrderCreated/newOrderCreated.types";
 
 console.log("All BullMQ workers started...");
