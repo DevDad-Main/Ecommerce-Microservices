@@ -17,13 +17,13 @@ export const sendNewUserEmailWorker = new Worker<NewUserEmailJobData>(
       `Required Field Received: To Email:${toEmail} Username:${username}`,
     );
 
-    console.log(`Sending Email To: ${toEmail}`);
+    // console.log(`Sending Email To: ${toEmail}`);
 
-    // await sendEmail({
-    //   toEmail,
-    //   subject: "Welcome to MicroMart!",
-    //   text: `Welcome ${username}, Your account has been created!`,
-    // });
+    await sendEmail({
+      toEmail,
+      subject: "Welcome to MicroMart!",
+      text: `Welcome ${username}, Your account has been created!`,
+    });
 
     job.log(`Deleted Stripe Prroduct: ${job.id}`);
   },

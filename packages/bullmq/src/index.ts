@@ -59,4 +59,13 @@ export { sendNewUserEmailWorker } from "./queues/email/NewUserEmail/newUserEmail
 export type { NewUserEmailJobData } from "./queues/email/NewUserEmail/newUserEmail.types";
 //#endregion
 
+//#region Send New Order Created Email Exports
+export {
+  addNewelyCreatedOrderEmailJob,
+  sendOrderCreatedEmailQueue,
+} from "./queues/email/NewOrderCreated/newOrderCreated.queue";
+
+export { sendNewUserEmailWorker } from "./queues/email/NewOrderCreated/newOrderCreated.worker";
+export { NewelyCreatedOrderJobData } from "./queues/email/NewOrderCreated/newOrderCreated.types";
+
 console.log("All BullMQ workers started...");

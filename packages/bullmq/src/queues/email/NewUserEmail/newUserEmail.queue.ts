@@ -19,7 +19,7 @@ export const addNewUserEmailJob = (
   data: NewUserEmailJobData,
   opts?: Parameters<typeof newUserEmailQueue.add>[2],
 ) => {
-  return newUserEmailQueue.add("process-stripe-product-deletion", data, {
+  return newUserEmailQueue.add("send-new-user-email", data, {
     ...opts,
   });
 };
